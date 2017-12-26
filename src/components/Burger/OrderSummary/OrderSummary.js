@@ -1,8 +1,9 @@
 import React from 'react'
-import Aux from '../../../hoc/Aux';
+import Aux from '../../../hoc/Aux/Aux';
 import Button from '../../UI/Button/Button';
 
 const orderSummary = (props) => {
+    
     const ingredientsSummary = Object.keys(props.ingredients)
         .map(igKey => {
             return (<li key={igKey}>
@@ -22,6 +23,7 @@ const orderSummary = (props) => {
             <Button btnType='Success' clicked={props.continue}>CONTINUE</Button>
         </Aux>
     )
+    
 }
 
 export default orderSummary;
