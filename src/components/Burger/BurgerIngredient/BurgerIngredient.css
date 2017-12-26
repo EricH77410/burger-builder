@@ -112,6 +112,14 @@
     border-radius: 20px;
 }
 
+.Ognon {
+    width: 85%;
+    height: 7%;
+    margin: 2% auto;
+    background: linear-gradient(#f7f337, rgb(255, 255, 245));
+    border-radius: 20px;
+}
+
 .Pickels {
     width: 60%;
     height: 6%;
