@@ -1,4 +1,5 @@
 import * as actionType from '../actions/actionTypes';
+import { updateObject } from '../utility';
 
 const initState = {
     ingredients:null,
@@ -18,26 +19,24 @@ const INGRDIENT_PRICES = {
 const reducer = (state = initState, action) => {
     switch(action.type){
         case actionType.ADD_INGREDIENT:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-                },
+            const ingredientAdded = {[action.ingredientName]: state.ingredients[action.ingredientName] + 1}
+            const updatedIngredients = updateObject(state.ingredients, ingredientAdded);
+            const updatedState = {
+                ingredients: updatedIngredients,
                 totalPrice: state.totalPrice + INGRDIENT_PRICES[action.ingredientName]
             }
+            return updateObject(state, updatedState);
+
         case actionType.REMOVE_INGREDIENT:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-                },
-                totalPrice: state.totalPrice - INGRDIENT_PRICES[action.ingredientName]
+            const ingredientRemoved = {[action.ingredientName]: state.ingredients[action.ingredientName] - 1}
+            const updatedIngs = updateObject(state.ingredients, ingredientRemoved);
+            const updState = {
+                ingredients: updatedIngs,
+                totalPrice: state.totalPrice + INGRDIENT_PRICES[action.ingredientName]
             }
+            return updateObject(state, updState);
         case actionType.SET_INGREDIENTS:
-            return {
-                ...state,
+            return updateObject(state, {
                 ingredients: {
                     salad: action.ingredients.salad,
                     ognon: action.ingredients.ognon,
@@ -48,12 +47,9 @@ const reducer = (state = initState, action) => {
                 },
                 totalPrice: 4,
                 error: false
-            }
+            })
         case actionType.FETCH_INGREDIENTS_FAILED:
-            return {
-                ...state,
-                error: true
-            }
+            return updateObject(state, {error: true});
             
         default:
             return state;
